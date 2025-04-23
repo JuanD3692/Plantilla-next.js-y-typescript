@@ -2,8 +2,8 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { ApiOptions, ApiResponse } from "@/types/api";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
-const API_VERSION = process.env.NEXT_PUBLIC_API_VERSION || 'v1';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+const API_VERSION = process.env.NEXT_PUBLIC_API_VERSION || "v1";
 
 interface ApiContextType {
   isLoading: boolean;
@@ -29,7 +29,9 @@ export function ApiProvider({ children }: { children: ReactNode }) {
 
     try {
       // Construir URL completa
-      const fullUrl = url.startsWith('http') ? url : `${BASE_URL}/${API_VERSION}${url}`;
+      const fullUrl = url.startsWith("http")
+        ? url
+        : `${BASE_URL}/${API_VERSION}${url}`;
 
       const headers: Record<string, string> = {
         Accept: "application/json",
