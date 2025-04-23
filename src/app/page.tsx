@@ -13,7 +13,7 @@ export default function Home() {
       }}
     >
       <h1
-        className="animate-slide-in delay-200"
+        className="delay-200"
         style={{
           fontSize: theme.typography.h1.fontSize,
           fontWeight: theme.typography.h1.fontWeight,
@@ -24,7 +24,7 @@ export default function Home() {
       </h1>
 
       <p
-        className="animate-scale-in delay-300"
+        className="delay-300"
         style={{
           fontSize: theme.typography.body1.fontSize,
           color: theme.colors.text.secondary,

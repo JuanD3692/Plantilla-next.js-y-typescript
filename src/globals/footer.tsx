@@ -25,7 +25,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* About Us */}
-          <div className="space-y-4 animate-slide-in delay-100">
+          <div className="space-y-4 delay-100">
             <h3
               style={{ fontSize: theme.typography.h3.fontSize }}
               className="font-semibold"
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4 animate-slide-in delay-200">
+          <div className="space-y-4 delay-200">
             <h3
               style={{ fontSize: theme.typography.h3.fontSize }}
               className="font-semibold"
@@ -77,7 +77,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4 animate-slide-in delay-300">
+          <div className="space-y-4 delay-300">
             <h3
               style={{ fontSize: theme.typography.h3.fontSize }}
               className="font-semibold"
@@ -99,7 +99,7 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-4 animate-slide-in delay-400">
+          <div className="space-y-4 delay-400">
             <h3
               style={{ fontSize: theme.typography.h3.fontSize }}
               className="font-semibold"
@@ -126,7 +126,7 @@ export default function Footer() {
 
         {/* Copyright and Policies */}
         <div
-          className="mt-12 pt-8 animate-scale-in delay-500"
+          className="mt-12 pt-8 delay-500"
           style={{
             borderTop: `1px solid ${theme.colors.text.disabled}20`,
           }}

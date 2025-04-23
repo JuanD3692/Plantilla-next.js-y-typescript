@@ -4,35 +4,49 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { useSnack } from "@/providers/snackProvider";
 import Link from "next/link";
 import { FiMail, FiLock, FiArrowRight, FiLoader } from "react-icons/fi";
+import { useApi } from "@/hooks/useApi";
+
+interface LoginResponse {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+  };
+}
 
 export default function LoginPage() {
   const theme = useTheme();
   const { showSnack } = useSnack();
+  const { loadAPI, isLoading } = useApi();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      // Validación de campos
       if (!email || !password) {
         showSnack("Por favor completa todos los campos", "error");
         return;
       }
 
-      setIsLoading(true);
+      const response = await loadAPI<LoginResponse>({
+        url: "/auth/login",
+        method: "POST",
+        data: { email, password },
+      });
 
-      // Aquí iría tu lógica de login real
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula llamada API
-
-      // Simulamos éxito
-      showSnack("¡Inicio de sesión exitoso!", "success");
+      if (response.ok && response.data) {
+        // Guardar token
+        localStorage.setItem("token", response.data.token);
+        showSnack("¡Inicio de sesión exitoso!", "success");
+        // Aquí podrías redirigir al usuario
+      } else {
+        showSnack(response.message || "Error al iniciar sesión", "error");
+      }
     } catch (error) {
-      showSnack("Error al iniciar sesión", "error");
-    } finally {
-      setIsLoading(false);
+      showSnack("Error en el servidor", "error");
     }
   };
 
@@ -40,7 +54,7 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center p-4 animate-fade-in">
       <div className="flex flex-col md:flex-row w-full max-w-5xl gap-8 items-center">
         {/* Columna izquierda - Decorativa */}
-        <div className="w-full md:w-1/2 space-y-6 text-center md:text-left animate-slide-in">
+        <div className="w-full md:w-1/2 space-y-6 text-center md:text-left delay-100">
           <h1
             className="text-4xl md:text-5xl font-bold"
             style={{ color: theme.colors.primary.main }}
@@ -59,7 +73,7 @@ export default function LoginPage() {
         {/* Columna derecha - Formulario */}
         <div className="w-full md:w-1/2">
           <div
-            className="relative p-8 rounded-3xl animate-scale-in"
+            className="relative p-8 rounded-3xl delay-200"
             style={{
               backgroundColor: theme.colors.background.paper,
               boxShadow: `
@@ -80,7 +94,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-6 relative">
               {/* Inputs */}
               <div className="space-y-4">
-                <div className="animate-slide-in delay-100">
+                <div className="delay-300">
                   <div className="relative group">
                     <FiMail
                       className="absolute left-3 top-1/2 -translate-y-1/2 transition-colors duration-200"
@@ -102,7 +116,7 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                <div className="animate-slide-in delay-200">
+                <div className="delay-400">
                   <div className="relative group">
                     <FiLock
                       className="absolute left-3 top-1/2 -translate-y-1/2 transition-colors duration-200"
@@ -129,7 +143,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-3 rounded-xl flex items-center justify-center space-x-2 hover-scale animate-slide-in delay-300 cursor-pointer transition-all duration-300 ${
+                className={`w-full py-3 rounded-xl flex items-center justify-center space-x-2 delay-500 cursor-pointer transition-all duration-300 ${
                   isLoading ? "opacity-70" : "hover:opacity-90"
                 }`}
                 style={{
@@ -148,7 +162,7 @@ export default function LoginPage() {
               </button>
 
               {/* Links */}
-              <div className="flex flex-col items-center space-y-4 animate-slide-in delay-400">
+              <div className="flex flex-col items-center space-y-4 delay-600">
                 <Link
                   href="/auth/forgot-password"
                   className="text-sm hover:opacity-80 transition-opacity"
